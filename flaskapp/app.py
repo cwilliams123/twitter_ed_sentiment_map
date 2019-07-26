@@ -33,7 +33,9 @@ def execute_query(query, args=()):
 
 @app.route('/')
 def introduction():
-	df = execute_query("""SELECT * FROM cc_counts LIMIT 15""")
+    #change the following to ccr_reorganized to get ccr data
+    table = "cc_reorganized"
+	df = execute_query("SELECT * FROM " + table)
 	chart_data = df.to_dict(orient='records')
 	chart_data = json.dumps(chart_data, indent=2)
 	data = {'chart_data': chart_data}
