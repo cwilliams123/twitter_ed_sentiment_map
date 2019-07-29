@@ -8,10 +8,9 @@ def get_abbr(state):
 
 database = "all_data"
 #type of the data is always cc (#commoncore) or ccr ("college and career readiness")
-type_data = "ccr"
+type_data = "cc"
 table_from = type_data
 table_to = type_data + "_reorganized"
-limit = 500
 
 con = db.connect(database)
 c = con.cursor()
@@ -32,8 +31,9 @@ states = ["Alabama","Alaska","Arizona","Arkansas","California","Colorado",
 
 date_range = pd.date_range(start=start_time, end=end_time, freq="MS").to_period("M")
 
+#dataframe where sentiment's aggregated by date for each state
 big_time_state_df = pd.DataFrame( 
-	columns = ['date', 'state', 'sentiment', 'frequency'])
+	columns = ['date', 'state', 'frequency', 'sentiment'])
 
 #make sure we're using full tweets (not deleted ones)
 old_df = old_df[old_df['deleted'] == 0]
@@ -54,7 +54,7 @@ for state in states:
 	#make a lil df for each state and add it to the big df
 	time_state_df = pd.DataFrame(
 	index = date_range, 
-	columns = ['date', 'state', 'sentiment', 'frequency'])
+	columns = ['date', 'state', 'frequency', 'sentiment'])
 	time_state_df['date'] = date_range
 	time_state_df['state'] = state
 	groupby = old_df[old_df['state'] == state].groupby(['created_at'])['sentiment_textblob']
@@ -75,4 +75,4 @@ big_time_state_df.to_sql(table_to, con, index= False)
 con.close()
 
 #save to csv
-big_time_state_df.to_csv(type_data + "_data_for_vis.csv")
+big_time_state_df.to_csv(type_data + "_data_for_vis.csv", index = False)
