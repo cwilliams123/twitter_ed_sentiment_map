@@ -40,7 +40,7 @@ old_df = old_df[old_df['deleted'] == 0]
 
 
 
-old_df['created_at'] = pd.to_datetime(old_df['created_at']) #make this time downloaded?
+old_df['created_at'] = pd.to_datetime(old_df['created_at'])
 
 #and then of the full tweets, make sure there aren't duplicates; since Prof. Rice's data doesn't have 
 #indices we just check time created and text of the tweet to see if they're the same
