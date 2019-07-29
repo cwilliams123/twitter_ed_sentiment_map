@@ -39,15 +39,8 @@ def introduction():
 	chart_data = df.to_dict(orient='records')
 	chart_data = json.dumps(chart_data, indent=2)
 	data = {'chart_data': chart_data}
+    #put in html file here !
 	return render_template("app.html", data=data)
-
-# @app.route("/viewdb")
-# def viewdb():
-#     result = execute_query("""SELECT * FROM cc_counts LIMIT 15""")
-#     str_rows = [','.join(map(str, row)) for row in result]
-#     cur.close()
-#     header = 'time,count\n'
-#     return header + '\n'.join(str_rows)
     
 
 if __name__ == '__main__':
