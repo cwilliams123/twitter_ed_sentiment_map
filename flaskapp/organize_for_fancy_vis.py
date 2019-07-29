@@ -7,7 +7,8 @@ def get_abbr(state):
 	return str(us.states.lookup(state).abbr)
 
 database = "all_data"
-type_data = "cc"
+#type of the data is always cc (#commoncore) or ccr ("college and career readiness")
+type_data = "ccr"
 table_from = type_data
 table_to = type_data + "_reorganized"
 limit = 500
@@ -71,5 +72,7 @@ big_time_state_df['state'] = big_time_state_df['state'].apply(get_abbr)
 #save to db
 c.execute("DROP TABLE IF EXISTS %s" % table_to)
 big_time_state_df.to_sql(table_to, con, index= False)
-
 con.close()
+
+#save to csv
+big_time_state_df.to_csv(type_data + "_data_for_vis.csv")
